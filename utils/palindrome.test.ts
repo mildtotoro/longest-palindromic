@@ -15,6 +15,7 @@ describe("findLongestPalindrome module", () => {
     { input: "qd", output: "q" },
     { input: "sss", output: "sss" },
     { input: "ssss", output: "ssss" },
+    { input: "aass", output: "aa" },
   ])("inline table", ({ input, output }) => {
     expect(findLongestPalindrome(input)).toMatch(output);
   });
@@ -46,6 +47,7 @@ describe("checkPalindrome module", () => {
     { input: "doud", output: false },
     { input: "ii", output: true },
     { input: "iakjsdhaksjdhi", output: false },
+    { input: "aass", output: false },
   ])("inline table", ({ input, output }) => {
     expect(checkPalindrome(input)).toEqual(output);
   });

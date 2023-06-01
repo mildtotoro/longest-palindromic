@@ -48,19 +48,16 @@ export function findLongestPalindrome(text: string): string {
   for (let anchorIndex = 0; anchorIndex < lastIndex; anchorIndex++) {
     startIndex = anchorIndex;
     endIndex = startIndex + 1;
+    textCheckPalindrome = "";
     while (endIndex <= lastIndex && startIndex >= 0) {
       const leftChar = text[startIndex];
       const rightChar = text[endIndex];
       textCheckPalindrome = `${leftChar}${textCheckPalindrome}${rightChar}`;
-      console.log("textCheckPalindrome", textCheckPalindrome);
 
       if (checkPalindrome(textCheckPalindrome)) {
         stringPalindromeEvens.push(textCheckPalindrome);
         startIndex = startIndex - 1;
         endIndex = endIndex + 1;
-
-        console.log("startIndex", startIndex);
-        console.log("endIndex", endIndex);
       } else {
         textCheckPalindrome = "";
         break;
@@ -68,10 +65,10 @@ export function findLongestPalindrome(text: string): string {
     }
   }
 
-  // console.log("stringPalindromeOdds", stringPalindromeOdds);
-  console.log("stringPalindromeEvens", stringPalindromeEvens);
   return findLongestString([...stringPalindromeOdds, ...stringPalindromeEvens]);
 }
+
+// export function findPossiblePalindromeOddLength() {}
 
 export function findLongestString(list: string[]): string {
   if (list.length === 0) return "";
