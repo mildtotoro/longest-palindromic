@@ -6,12 +6,15 @@
 export function findLongestPalindrome(text: string): string {
   if (text.length === 0) return "";
   if (text.length === 1) return text;
-  if (text.length === 2 && text[0] !== text[1]) return text[0];
-
+  const defaultString = text.length > 1 ? text[0] : "";
   const stringPalindromeOdds = findPossiblePalindromeOddLength(text);
   const stringPalindromeEvens = findPossiblePalindromeEvenLength(text);
 
-  return findLongestString([...stringPalindromeOdds, ...stringPalindromeEvens]);
+  return findLongestString([
+    defaultString,
+    ...stringPalindromeOdds,
+    ...stringPalindromeEvens,
+  ]);
 }
 
 export function findPossiblePalindromeEvenLength(text: string): string[] {

@@ -16,6 +16,7 @@ describe("findLongestPalindrome module", () => {
     { input: "sss", output: "sss" },
     { input: "ssss", output: "ssss" },
     { input: "aass", output: "aa" },
+    { input: "abc", output: "a" },
   ])("inline table", ({ input, output }) => {
     expect(findLongestPalindrome(input)).toMatch(output);
   });
