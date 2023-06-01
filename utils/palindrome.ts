@@ -1,5 +1,5 @@
 /**
- * findLongestPalindrome
+ * Find the longest palindrome
  * @param text
  * @returns string
  */
@@ -8,14 +8,49 @@ export function findLongestPalindrome(text: string): string {
   if (text.length === 1) return text;
   if (text.length === 2 && text[0] !== text[1]) return text[0];
 
+  const stringPalindromeOdds = findPossiblePalindromeOddLength(text);
+  const stringPalindromeEvens = findPossiblePalindromeEvenLength(text);
+
+  return findLongestString([...stringPalindromeOdds, ...stringPalindromeEvens]);
+}
+
+export function findPossiblePalindromeEvenLength(text: string): string[] {
   const lastIndex = text.length - 1;
-  console.log("lastIndex", lastIndex);
+  let startIndex = 0;
+  let endIndex = 0;
+  let stringPalindromeEvens: string[] = [];
+  let textCheckPalindrome = "";
+
+  for (let anchorIndex = 0; anchorIndex < lastIndex; anchorIndex++) {
+    startIndex = anchorIndex;
+    endIndex = startIndex + 1;
+    textCheckPalindrome = "";
+    while (endIndex <= lastIndex && startIndex >= 0) {
+      const leftChar = text[startIndex];
+      const rightChar = text[endIndex];
+      textCheckPalindrome = `${leftChar}${textCheckPalindrome}${rightChar}`;
+
+      if (checkPalindrome(textCheckPalindrome)) {
+        stringPalindromeEvens.push(textCheckPalindrome);
+        startIndex = startIndex - 1;
+        endIndex = endIndex + 1;
+      } else {
+        textCheckPalindrome = "";
+        break;
+      }
+    }
+  }
+
+  return stringPalindromeEvens;
+}
+
+export function findPossiblePalindromeOddLength(text: string): string[] {
+  const lastIndex = text.length - 1;
   let startIndex = 0;
   let endIndex = 0;
   let stringPalindromeOdds: string[] = [];
   let textCheckPalindrome = ``;
 
-  // Note: check palindrome length odd
   for (let centerIndex = 0; centerIndex < lastIndex; centerIndex++) {
     startIndex = centerIndex - 1;
     endIndex = centerIndex + 1;
@@ -42,33 +77,8 @@ export function findLongestPalindrome(text: string): string {
     }
   }
 
-  // Note: check palindrome length even
-  let stringPalindromeEvens: string[] = [];
-  textCheckPalindrome = "";
-  for (let anchorIndex = 0; anchorIndex < lastIndex; anchorIndex++) {
-    startIndex = anchorIndex;
-    endIndex = startIndex + 1;
-    textCheckPalindrome = "";
-    while (endIndex <= lastIndex && startIndex >= 0) {
-      const leftChar = text[startIndex];
-      const rightChar = text[endIndex];
-      textCheckPalindrome = `${leftChar}${textCheckPalindrome}${rightChar}`;
-
-      if (checkPalindrome(textCheckPalindrome)) {
-        stringPalindromeEvens.push(textCheckPalindrome);
-        startIndex = startIndex - 1;
-        endIndex = endIndex + 1;
-      } else {
-        textCheckPalindrome = "";
-        break;
-      }
-    }
-  }
-
-  return findLongestString([...stringPalindromeOdds, ...stringPalindromeEvens]);
+  return stringPalindromeOdds;
 }
-
-// export function findPossiblePalindromeOddLength() {}
 
 export function findLongestString(list: string[]): string {
   if (list.length === 0) return "";
