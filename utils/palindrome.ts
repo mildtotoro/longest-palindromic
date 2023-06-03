@@ -7,8 +7,8 @@ export function findLongestPalindrome(text: string): string {
   if (text.length === 0) return "";
   if (text.length === 1) return text;
   const defaultString = text.length > 1 ? text[0] : "";
-  const stringPalindromeOdds = findPossiblePalindromeOddLength(text);
-  const stringPalindromeEvens = findPossiblePalindromeEvenLength(text);
+  const stringPalindromeOdds = findMaxPalindromeOddLength(text);
+  const stringPalindromeEvens = findMaxPalindromeEvenLength(text);
 
   return findLongestString([
     defaultString,
@@ -17,12 +17,13 @@ export function findLongestPalindrome(text: string): string {
   ]);
 }
 
-export function findPossiblePalindromeEvenLength(text: string): string[] {
+export function findMaxPalindromeEvenLength(text: string): string[] {
   const lastIndex = text.length - 1;
   let startIndex = 0;
   let endIndex = 0;
   let stringPalindromeEvens: string[] = [];
   let textCheckPalindrome = "";
+  let maxLength = 0;
 
   for (let anchorIndex = 0; anchorIndex < lastIndex; anchorIndex++) {
     startIndex = anchorIndex;
@@ -34,7 +35,17 @@ export function findPossiblePalindromeEvenLength(text: string): string[] {
       textCheckPalindrome = `${leftChar}${textCheckPalindrome}${rightChar}`;
 
       if (checkPalindrome(textCheckPalindrome)) {
-        stringPalindromeEvens.push(textCheckPalindrome);
+        if (textCheckPalindrome.length > maxLength) {
+          stringPalindromeEvens = [textCheckPalindrome];
+          maxLength = textCheckPalindrome.length;
+        } else if (textCheckPalindrome.length === maxLength) {
+          stringPalindromeEvens.push(textCheckPalindrome);
+        }
+
+        if (text.length === maxLength) {
+          return stringPalindromeEvens;
+        }
+
         startIndex = startIndex - 1;
         endIndex = endIndex + 1;
       } else {
@@ -47,13 +58,13 @@ export function findPossiblePalindromeEvenLength(text: string): string[] {
   return stringPalindromeEvens;
 }
 
-export function findPossiblePalindromeOddLength(text: string): string[] {
+export function findMaxPalindromeOddLength(text: string): string[] {
   const lastIndex = text.length - 1;
   let startIndex = 0;
   let endIndex = 0;
   let stringPalindromeOdds: string[] = [];
   let textCheckPalindrome = ``;
-
+  let maxLength = 0;
   for (let centerIndex = 0; centerIndex < lastIndex; centerIndex++) {
     startIndex = centerIndex - 1;
     endIndex = centerIndex + 1;
@@ -71,7 +82,17 @@ export function findPossiblePalindromeOddLength(text: string): string[] {
       textCheckPalindrome = `${startChar}${textCheckPalindrome}${endChar}`;
 
       if (checkPalindrome(textCheckPalindrome)) {
-        stringPalindromeOdds.push(textCheckPalindrome);
+        if (textCheckPalindrome.length > maxLength) {
+          stringPalindromeOdds = [textCheckPalindrome];
+          maxLength = textCheckPalindrome.length;
+        } else if (textCheckPalindrome.length === maxLength) {
+          stringPalindromeOdds.push(textCheckPalindrome);
+        }
+
+        if (text.length === maxLength) {
+          return stringPalindromeOdds;
+        }
+
         startIndex = startIndex - 1;
         endIndex = endIndex + 1;
       } else {
