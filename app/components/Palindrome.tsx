@@ -1,7 +1,7 @@
 import { findLongestPalindrome } from "@/utils/palindrome";
 import { useState } from "react";
 
-const maxLength = 1000;
+export const maxLength = 1000;
 
 export const Palindrome = () => {
   const [text, setText] = useState("");
@@ -31,7 +31,11 @@ export const Palindrome = () => {
       >
         {text.length}/{maxLength}
       </small>
-      {errorMessage && <small>{errorMessage}</small>}
+      {errorMessage && (
+        <small data-test-id="error-box" className="text-red-800">
+          {errorMessage}
+        </small>
+      )}
       <button
         data-test-id="submit-button"
         className="bg-[#003471] px-2 text-white w-full rounded-sm py-1 uppercase"
