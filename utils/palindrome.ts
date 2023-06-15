@@ -3,7 +3,45 @@
  * @param text
  * @returns string
  */
-export function findLongestPalindrome(text: string): string {
+
+/**
+ * @param {string} s
+ * @return {string}
+ */
+export function findLongestPalindrome(s: string): string {
+  let longestCount = 0;
+  let leftIndex = 0;
+  if (s.length < 2) {
+    return s;
+  }
+
+  const helper = (i: number, j: number) => {
+    console.log("i", i);
+    console.log("j", j);
+    while (s[i] === s[j] && i >= 0 && j <= s.length - 1) {
+      i--;
+      j++;
+    }
+
+    if (longestCount < j - i - 1) {
+      console.log("longestCount", longestCount);
+      console.log("leftIndex", leftIndex);
+      longestCount = j - i - 1;
+      leftIndex = i + 1;
+    }
+  };
+
+  for (let index = 0; index < s.length; index++) {
+    // const element = s[index];
+    let i = index;
+    let j = index + 1;
+    // helper(i, i);
+    helper(i, j);
+  }
+  return s.slice(leftIndex, leftIndex + longestCount);
+}
+
+export function findLongestPalindromeOld(text: string): string {
   if (text.length === 0) return "";
   if (text.length === 1) return text;
   const defaultString = text.length > 1 ? text[0] : "";
